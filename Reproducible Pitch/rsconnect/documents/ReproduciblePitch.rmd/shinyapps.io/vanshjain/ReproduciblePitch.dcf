@@ -1,0 +1,13 @@
+name: ReproduciblePitch
+title: ReproduciblePitch
+username:
+account: vanshjain
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5190288
+bundleId: 5285514
+url: https://vanshjain.shinyapps.io/ReproduciblePitch/
+when: 1637687966.84147
+lastSyncTime: 1637687966.84147
+asMultiple: FALSE
+asStatic: FALSE

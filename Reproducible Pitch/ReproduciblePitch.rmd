@@ -1,0 +1,54 @@
+---
+title: "Shiny Application and Reproducible Pitch"
+author: "Vansh Jain"
+date: "23rd November 2021"
+output: ioslides_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## The Application
+
+We use the Galton families dataset to predict the height of a child.
+
+## Loading the data
+
+We Use the HistData library to obtain the dataset and the dplyr library for easy data manipulation.
+
+```{r message=FALSE}
+library(HistData)
+library(dplyr)
+dataset <- (GaltonFamilies)
+```
+
+## Plotting the data
+
+```{r}
+plot(jitter(dataset$childHeight) ~ dataset$midparentHeight,xlab="Average Height of the Parents (in inches)",ylab="Height of the Child (in inches)",main="Scatterplot of Galton Family Data",pch=19,frame.plot=FALSE,col=ifelse(dataset$gender=="female", "pink", "light blue"))
+legend(65,80,pch=c(19,19),col=c("pink","light blue"),c("female", "male"),bty="o",cex=.8)
+```
+
+## Converting the heights to inches
+
+```{r}
+inchToCM = 2.54
+
+dataset <- dataset %>% mutate(father=father*inchToCM,
+                    mother=mother*inchToCM,
+                    childHeight=childHeight*inchToCM,
+                    midparentHeight = midparentHeight*inchToCM)
+
+plot(jitter(dataset$childHeight) ~ dataset$midparentHeight,xlab="Average Height of the Parents (in inches)",ylab="Height of the Child (in inches)",main="Scatterplot of Galton Family Data",pch=19,frame.plot=FALSE,col=ifelse(dataset$gender=="female", "pink", "light blue"))
+legend(65,80,pch=c(19,19),col=c("pink","light blue"),c("female", "male"),bty="o",cex=.8)
+```
+
+## Model Chosen
+
+Here the data seems to be linearly correlated. Hence we use a linear model.
+
+```{r}
+heightModel <- lm(childHeight ~ father + mother + gender, data=dataset)
+```
